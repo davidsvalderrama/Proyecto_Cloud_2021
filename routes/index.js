@@ -1,5 +1,4 @@
 const express = require('express');
-const animalsAPI = require('./animalsAPI');
 const router = express.Router();
 const Joi = require('joi');
 
@@ -7,6 +6,8 @@ const usersAPI = require('./usersAPI');
 
 //API for the project Cloud 2021
 const API = require('../database/dynamoConnection');
+let usersData = usersAPI.usersData;
+
 
 //Validaciones del esquema
 const schema = Joi.object({
@@ -17,48 +18,49 @@ const schema = Joi.object({
   basecolour: Joi.string()
 });
 
-let fullDataAnimals = animalsAPI.fullDataAnimals;
-let usersData = usersAPI.usersData;
-
 
 //Get page of login
 router.get('/login', (req, res) =>{
   res.render('login');
 });
 
-// Get home page
+//Get home page
 router.get('/animals', async function (req, res, next) {
-  //console.log(fullDataAnimals);
   const dataJson = await API.getDataFromAnimals();
+  //console.log(fullDataAnimals);
   console.log(dataJson);
   res.render('index', { dataJson});
 });
 
-// Get Details page
-router.get('/:id', (req, res) => {
+//Get Details page
+router.get('/:id', async function (req, res, next) {
   const {id, imageUrl} = req.params;
   const {url} = req.query;
-  const animal = fullDataAnimals.find(animal => animal.id == id);
+  const dataJson = await API.getDataFromAnimals();
+  const animal = dataJson.find(animal => animal.id == id);
   res.render('details', {animal});
 });
 
-// Get adopt Page
-router.get('/:id/adopt', (req, res) => {
+//Get adopt Page
+router.get('/:id/adopt', async function (req, res, next) {
   const {id} = req.params;
-  const animal = fullDataAnimals.find(animal => animal.id == id);
+  const dataJson = await API.getDataFromAnimals();
+  const animal = dataJson.find(animal => animal.id == id);
   res.render('adopt', {animal});
   
 });
 
-//assign owner
-router.post('/own/:id',function(req, res){
+//Assign owner
+router.post('/own/:id', async function(req, res, next) {
   const iduser = req.body.idtx;
-  const animal = fullDataAnimals.find(animal => animal.id == req.params.id)
+  const dataJson = await API.getDataFromAnimals();
+  const animal = dataJson.find(animal => animal.id == req.params.id)
   animal.owner = usersData.find(user => user.id == iduser).fullname;
   //console.log(animal);
-  res.render('index', { fullDataAnimals });
+  res.render('index', { dataJson });
 });
 
+/*
 //Update cat
 router.put('/animals/:id',function(req, res){
   const { id } = req.params;
@@ -85,5 +87,6 @@ router.post('/animals',function(req, res){
   console.log("Animal añadido");
   res.send(animal);
 });
+*/
 
 module.exports = router;
