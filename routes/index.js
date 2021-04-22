@@ -5,6 +5,9 @@ const Joi = require('joi');
 
 const usersAPI = require('./usersAPI');
 
+//API for the project Cloud 2021
+const API = require('../database/dynamoConnection');
+
 //Validaciones del esquema
 const schema = Joi.object({
   animalname: Joi.string().min(5).required(),
@@ -25,7 +28,10 @@ router.get('/login', (req, res) =>{
 
 // Get home page
 router.get('/animals', async function (req, res, next) {
-  res.render('index', { fullDataAnimals});
+  //console.log(fullDataAnimals);
+  const dataJson = await API.getDataFromAnimals();
+  console.log(dataJson);
+  res.render('index', { dataJson});
 });
 
 // Get Details page
