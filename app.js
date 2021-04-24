@@ -17,8 +17,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 //Handle hbs
-app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'Layout', layoutsDir: __dirname + '/views/Layouts'}));
-
+//app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'Layout', layoutsDir: __dirname + '/views/Layouts'}));
+app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout'}));
 
 app.use(logger('dev'));
 app.use(express.json());
