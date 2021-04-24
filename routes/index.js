@@ -12,7 +12,7 @@ let usersData = usersAPI.usersData;
 //Validaciones del esquema
 const schema = Joi.object({
   animalname: Joi.string().min(5).required(),
-  breedname :Joi.string(),
+  breedname: Joi.string(),
   speciesname: Joi.string(),
   animalage: Joi.string().required(),
   basecolour: Joi.string()
@@ -20,38 +20,42 @@ const schema = Joi.object({
 
 
 //Get page of login
-router.get('/login', (req, res) =>{
+router.get('/login', (req, res) => {
   res.render('login');
 });
 
 //Get home page
 router.get('/animals', async function (req, res, next) {
-  const dataJson = await API.getDataFromAnimals();
-  //console.log(fullDataAnimals);
-  console.log(dataJson);
-  res.render('index', { dataJson});
+  try {
+    const dataJson = await API.getDataFromAnimals();
+    //console.log(fullDataAnimals);
+    console.log(dataJson);
+    res.render('index', { dataJson });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //Get Details page
 router.get('/:id', async function (req, res, next) {
-  const {id, imageUrl} = req.params;
-  const {url} = req.query;
+  const { id, imageUrl } = req.params;
+  const { url } = req.query;
   const dataJson = await API.getDataFromAnimals();
   const animal = dataJson.find(animal => animal.id == id);
-  res.render('details', {animal});
+  res.render('details', { animal });
 });
 
 //Get adopt Page
 router.get('/:id/adopt', async function (req, res, next) {
-  const {id} = req.params;
+  const { id } = req.params;
   const dataJson = await API.getDataFromAnimals();
   const animal = dataJson.find(animal => animal.id == id);
-  res.render('adopt', {animal});
-  
+  res.render('adopt', { animal });
+
 });
 
 //Assign owner
-router.post('/own/:id', async function(req, res, next) {
+router.post('/own/:id', async function (req, res, next) {
   const iduser = req.body.idtx;
   const dataJson = await API.getDataFromAnimals();
   const animal = dataJson.find(animal => animal.id == req.params.id)
