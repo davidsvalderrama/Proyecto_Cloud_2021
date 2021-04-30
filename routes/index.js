@@ -1,23 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
 
 const usersAPI = require('./usersAPI');
-
-//API for the project Cloud 2021
-const API = require('../database/dynamoConnection');
 let usersData = usersAPI.usersData;
 
-
-//Validaciones del esquema
-const schema = Joi.object({
-  animalname: Joi.string().min(5).required(),
-  breedname: Joi.string(),
-  speciesname: Joi.string(),
-  animalage: Joi.string().required(),
-  basecolour: Joi.string()
-});
-
+//API for the project Cloud 2021 of DynamoDB
+const API = require('../database/dynamoConnection');
 
 //Get page of login
 router.get('/login', (req, res) => {
@@ -51,7 +39,6 @@ router.get('/:id/adopt', async function (req, res, next) {
   const dataJson = await API.getDataFromAnimals();
   const animal = dataJson.find(animal => animal.id == id);
   res.render('adopt', { animal });
-
 });
 
 //Assign owner
