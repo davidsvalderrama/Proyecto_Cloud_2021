@@ -4,6 +4,10 @@ const router = express.Router();
 const usersAPI = require('./usersAPI');
 let usersData = usersAPI.usersData;
 
+
+//API for the project Cloud 2021 of service of Translate IBM Cloud
+const TranslateAPI = require('../translate/translateIBM')
+
 //API for the project Cloud 2021 of DynamoDB
 const API = require('../database/dynamoConnection');
 
@@ -49,6 +53,16 @@ router.post('/own/:id', async function (req, res, next) {
   animal.owner = usersData.find(user => user.id == iduser).fullname;
   //console.log(animal);
   res.render('index', { dataJson });
+});
+
+//Translate page of adopt in Spanish
+router.post('/adoptEsp/:id', async function (req, res, next)  {
+  const translate = await TranslateAPI.getTranslate();
+  const aux = JSON.stringify(translate.result.translations);
+  const parrafoTrans = aux.slice(17, (aux.length -3))
+  const dataJson = await API.getDataFromAnimals();
+  const animal = dataJson.find(animal => animal.id == req.params.id)
+  res.render('adoptEsp', {animal, parrafoTrans});
 });
 
 /*

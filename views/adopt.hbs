@@ -1,12 +1,17 @@
 <div class="container-adopt">
-    <p class="text-adopt">You're adopting {{animal.animalname}} </p>
-    <p class="text-adopt">please write your's id so we can</p>
-    <p class="text-adopt">register you on our database</p>
+    <p class="text-adopt" name="parrafo" id="1">You're adopting {{animal.animalname}} 
+    please write your id so we can
+    register you on our database</p>
     <br>
-    <p class="text-adopt">Thanks for adopting!</p>
+    <p class="text-adopt">Thanks for adopting!</p> <br>
     <form method="post" action="/own/{{animal.id}}">
         <div class="div-id"> id <input type="text" class="id-text", name="idtx">
             <a href="/"><button class="adopt-btn"> Adopt</button>
+        </div> </a>
+    </form>
+    <form method="post" action="/adoptEsp/{{animal.id}}">
+     <div class="div-id-trans">
+            <a href="/"><button class="btn-trans"> Translate Page</button>
         </div> </a>
     </form>
 </div>

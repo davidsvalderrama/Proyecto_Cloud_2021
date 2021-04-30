@@ -11,4 +11,6 @@ router.get('/users', async function (req, res, next)  {
   console.log(dataFromS3);
 });
 
+
+
 module.exports = router;
