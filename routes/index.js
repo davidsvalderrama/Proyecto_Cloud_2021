@@ -4,6 +4,8 @@ const router = express.Router();
 const usersAPI = require('./usersAPI');
 let usersData = usersAPI.usersData;
 
+//API for the project Cloud 2021 of AWS S3
+const APIS3 = require('../database/amazonS3')
 
 //API for the project Cloud 2021 of service of Translate IBM Cloud
 const TranslateAPI = require('../translate/translateIBM')
@@ -64,6 +66,32 @@ router.post('/adoptEsp/:id', async function (req, res, next)  {
   const animal = dataJson.find(animal => animal.id == req.params.id)
   res.render('adoptEsp', {animal, parrafoTrans});
 });
+
+
+//Route of auth user from S3
+router.post('/loginAuth', async function (req, res, next)  {
+  const dataJson = await API.getDataFromAnimals();
+  const emailInput = req.body.user;
+  const passInput = req.body.pass; 
+  var emailsArray = [];
+  var passArray = [];
+  let dataFromS3 = JSON.parse(await APIS3.getUsersFromS3());
+  console.log(dataFromS3.length)
+  for (let i = 0; i < dataFromS3.length; i++){
+    emailsArray.push(dataFromS3[i].email)
+  }
+  for (let i = 0; i < dataFromS3.length; i++){
+    passArray.push(dataFromS3[i].pass)
+  }
+  if(emailsArray.includes(emailInput) && passArray.includes(passInput)){
+    console.log("Ingreso correcto")
+    res.render('index', { dataJson });
+  } else {
+    console.log("Fallaron los datos")
+    res.status(404).send("Not found.");
+  }
+});
+
 
 /*
 //Update cat

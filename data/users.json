@@ -2,16 +2,22 @@
     {
         "id": 1,
         "fullname": "David Sanchez",
+        "email": "david@iteso.mx",
+        "pass": "123",
         "age": 22
     },
     {
         "id": 2,
         "fullname": "Isaac Cabrera",
+        "email": "isaac@iteso.mx",
+        "pass": "123",
         "age": 22
     },
     {
         "id": 3,
         "fullname": "Erick De Santiago",
+        "email": "erick@iteso.mx",
+        "pass": "123",
         "age": 22
     }
 ]
