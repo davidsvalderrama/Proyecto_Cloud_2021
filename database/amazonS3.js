@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk');
 
+require('dotenv').config();
+
 const SESConfig = {
   apiVersion: "2012-08-10",
   accessKeyId: process.env.AWS_ACCESS_KEY,
