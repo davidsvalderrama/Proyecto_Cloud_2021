@@ -1,9 +1,11 @@
 var AWS = require("aws-sdk");
 
 const SESConfig = {
+    apiVersion: "2012-08-10",
     accessKeyId: process.env.AWS_ACCESS_KEY,
     accessSecretKey: process.env.AWS_SECRET_KEY,
-    region: "us-east-1"
+    region: "us-east-1",
+    sessionToken: process.env.AWS_SESSION_TOKEN,
 }
 
 AWS.config.update(SESConfig);
