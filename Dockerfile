@@ -16,7 +16,7 @@ COPY package*.json ./
 RUN npm install
 # copiamos todo al directorio de trabajo
 COPY . .
-# exponemos el puero
+# exponemos el puerto
 EXPOSE ${PORT}
 # corremos el comando para nuestra app
 CMD [ "node", "./bin/www" ]

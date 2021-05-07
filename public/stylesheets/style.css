@@ -309,3 +309,29 @@ div.form-group{
   padding: 10px;
   border-radius: 10px;
 }
+
+
+
+/****
+Estilo del Login
+*/
+.container-getDate{
+  background-color: rgb(156, 151, 151);
+  margin-left :auto;
+  margin-right: auto;
+  height: 00%;
+  width: 0%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.row-date {
+  display: flex;
+  justify-content: center;
+}
+
+.tittle-date{
+  text-align: center;
+}

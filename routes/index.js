@@ -18,12 +18,17 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+//Get page funny for get date 
+router.get('/getHello', (req, res) => {
+  res.render('getHello');
+});
+
 //Get home page
 router.get('/animals', async function (req, res, next) {
   try {
     const dataJson = await API.getDataFromAnimals();
     //console.log(fullDataAnimals);
-    console.log(dataJson);
+    //console.log(dataJson);
     res.render('index', { dataJson });
   } catch (err) {
     next(err);
@@ -68,6 +73,7 @@ router.post('/adoptEsp/:id', async function (req, res, next)  {
 });
 
 
+
 //Route of auth user from S3
 router.post('/loginAuth', async function (req, res, next)  {
   const dataJson = await API.getDataFromAnimals();
@@ -76,7 +82,7 @@ router.post('/loginAuth', async function (req, res, next)  {
   var emailsArray = [];
   var passArray = [];
   let dataFromS3 = JSON.parse(await APIS3.getUsersFromS3());
-  console.log(dataFromS3.length)
+  //console.log(dataFromS3.length)
   for (let i = 0; i < dataFromS3.length; i++){
     emailsArray.push(dataFromS3[i].email)
   }
@@ -91,6 +97,7 @@ router.post('/loginAuth', async function (req, res, next)  {
     res.status(404).send("Not found.");
   }
 });
+
 
 
 /*
